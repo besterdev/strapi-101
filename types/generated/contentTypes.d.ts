@@ -368,9 +368,15 @@ export interface ApiDocumentDocument extends Schema.CollectionType {
     singularName: 'document';
     pluralName: 'documents';
     displayName: 'Document';
+    description: '';
   };
   options: {
     draftAndPublish: true;
+  };
+  pluginOptions: {
+    versions: {
+      versioned: true;
+    };
   };
   attributes: {
     Title: Attribute.String;
@@ -390,6 +396,15 @@ export interface ApiDocumentDocument extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
+    versions: Attribute.Relation<
+      'api::document.document',
+      'manyToMany',
+      'api::document.document'
+    >;
+    vuid: Attribute.String;
+    versionNumber: Attribute.Integer & Attribute.DefaultTo<1>;
+    versionComment: Attribute.String;
+    isVisibleInListView: Attribute.Boolean & Attribute.DefaultTo<true>;
   };
 }
 
